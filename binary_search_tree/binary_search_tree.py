@@ -1,3 +1,5 @@
+
+
 """
 Binary search trees are a data structure that enforce an ordering over
 the data they store. That ordering in turn makes it a lot more efficient
@@ -10,8 +12,6 @@ This part of the project comprises two days:
    on the BSTNode class.
 """
 
-
-# Stack _________________________________
 
 class Node:
     def __init__(self, value=None, next_node=None):
@@ -97,6 +97,28 @@ class LinkedList:
         return False
 
 
+class Queue:
+    def __init__(self):
+        self.size = 0
+        self.storage = LinkedList()
+
+    def __len__(self):
+        return self.size
+
+    def enqueue(self, value):
+        # add the new value, to the tail of our list
+        self.size += 1
+        self.storage.add_to_tail(value)
+
+    def dequeue(self):
+        if self.size == 0:
+            return None
+        # remove the value from the head of our list
+        self.size -= 1
+        value = self.storage.remove_head()
+        return value
+
+
 class Stack:
     def __init__(self):
         self.size = 0
@@ -118,7 +140,6 @@ class Stack:
         self.size -= 1
         node = self.storage.remove_head()
         return node
-    # ________________________________________
 
 
 class BSTNode:
@@ -262,47 +283,79 @@ class BSTNode:
         self.value = node.value
 
         if self.left is not None:
-            next_node = self.left.in_order_print(self.left)
-            return next_node
-        elif self.right is not None:
-            next_node = self.right.in_order_print(self.right)
-            return next_node
+            self.left.in_order_print(self.left)
 
-        print(f'In order print: {self.value}')
+        print(self.value)
+
+        if self.right is not None:
+            self.right.in_order_print(self.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
 
     def bft_print(self, node):
-        pass
 
-    # create a queue for nodes
-    # add the first node to the queue
-    # while queue is not empty
-    # remove the first node from the queue
-    # print the removed node
-    # add all children into the queue
+        # create a queue for nodes
+        # add the first node to the queue
+        # while queue is not empty
+        # remove the first node from the queue
+        # print the removed node
+        # add all children into the queue
+        # Print the value of every node, starting with the given node,
+        # in an iterative depth first traversal
 
-    # Print the value of every node, starting with the given node,
-    # in an iterative depth first traversal
+        queue = []
+        queue.append(node)
+        # current_node = node
+        while len(queue) > 0:
+            current_node = queue.pop(0)
+            print(current_node.value)
+            if current_node.left:
+                queue.append(current_node.left)
+            if current_node.right:
+                queue.append(current_node.right)
 
     def dft_print(self, node):
-        pass
-    # create a stack for nodes
-    # add the first node to the stack
-    # while the stack is not empty
-    # get the current node from the top of the stack
-    # print that node
-    # add all children to the stack
+
+        # create a stack for nodes
+        # add the first node to the stack
+        # while the stack is not empty
+        # get the current node from the top of the stack
+        # print that node
+        # add all children to the stack
+
+        stack = []
+        stack.append(node)
+        # current_node = node
+        while len(stack) > 0:
+            current_node = stack.pop()
+            print(current_node.value)
+            if current_node.left:
+                stack.append(current_node.left)
+            if current_node.right:
+                stack.append(current_node.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
     # Print Pre-order recursive DFT
 
     def pre_order_dft(self, node):
+        # self.in_order_print(node)
         pass
 
     # Print Post-order recursive DFT
 
     def post_order_dft(self, node):
         pass
+
+
+test = BSTNode(1)
+test.insert(8)
+test.insert(5)
+test.insert(7)
+test.insert(6)
+test.insert(3)
+test.insert(4)
+test.insert(2)
+
+test.bft_print(test)
